@@ -1,6 +1,15 @@
-angular.module('tabnav', [])
-  .controller('tabNavController', ['$scope', '$location', '$cacheFactory', function($scope, $location, $cacheFactory) {
+angular.module('tabnav', ['ngRoute'])
+  .config(["$routeProvider", function ($routeProvider) {
+    $routeProvider
+      .when('/:message',
+      {
+        templateUrl: "index.html",
+        controller: "tabNavController"
+      })
+  }])
+  .controller('tabNavController', ['$scope', '$location', '$cacheFactory', '$routeParams', function($scope, $location, $cacheFactory, $routeParams) {
     $scope.selectedTab = "tab1";
+    $scope.selectedTab = $routeParams.message;
     $scope.cache = $cacheFactory('cacheId');
     $scope.tabNavModel = {
       "tab1": {
